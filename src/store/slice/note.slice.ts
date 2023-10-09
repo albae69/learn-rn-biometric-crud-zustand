@@ -11,7 +11,7 @@ export interface NoteSlice {
 }
 
 const createNoteSlice: StateCreator<NoteSlice> = set => ({
-  notes: [{id: 0, title: 'title 1', description: 'lorem ipsum sit dolor amet'}],
+  notes: [],
   add: (note: Note) => set(state => ({notes: state.notes.concat(note)})),
   remove: id =>
     set(state => ({notes: state.notes.filter(item => item.id !== id)})),

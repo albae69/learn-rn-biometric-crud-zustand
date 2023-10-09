@@ -4,8 +4,11 @@ import {StatusBar} from 'react-native';
 
 // Local files
 import Navigation from '@navigation';
+import {storage} from '@utils';
 
 const App = () => {
+  console.log('storage keys', storage.getAllKeys());
+
   return (
     <SafeAreaProvider>
       <StatusBar barStyle="default" />
