@@ -1,11 +1,10 @@
 import React, {useState} from 'react';
-import {View, Text, FlatList, Modal, ScrollView, Alert} from 'react-native';
+import {View, Text, FlatList, Modal, Alert} from 'react-native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 
 // Local files
 import {RootStackParamList} from '../navigation/types';
 import {Button, Card, ListItem} from '@components';
-import {theme} from '@utils';
 import {Note} from '@models/Note';
 import useBoundStore from '@store';
 
@@ -15,44 +14,29 @@ const Home = ({navigation}: Props) => {
   // States
   const [visible, setVisible] = useState(false);
   const [selectedItem, setSelectedItem] = useState<Note | null>(null);
-  const {notes, remove, add, edit} = useBoundStore(state => state);
-  console.log('notes', notes);
+  const {notes, remove, edit} = useBoundStore(state => state);
 
   const onDelete = () => {
-    Alert.alert(
-      'Message',
-      'Are you sure want to delete this note?',
-      [
-        {
-          text: 'Cancel',
+    Alert.alert('Message', 'Are you sure want to delete this note?', [
+      {
+        text: 'Cancel',
+      },
+      {
+        onPress: () => {
+          remove(selectedItem?.id!);
+          setVisible(false);
         },
-        {
-          onPress: () => {
-            remove(selectedItem?.id!);
-            setVisible(false);
-          },
-        },
-      ],
-      {cancelable: true},
-    );
+      },
+    ]);
   };
 
   const onAddNewNote = () => {
     navigation.navigate('AddNewNote');
-    // let newNote: Note = {
-    //   id: notes.length + 1,
-    //   title: 'title',
-    //   description: 'description',
-    // };
-    // add(newNote);
   };
 
   const onEdit = () => {
-    edit(selectedItem?.id!, {
-      id: selectedItem?.id!,
-      title: 'title 2',
-      description: 'description 2',
-    });
+    setVisible(false);
+    navigation.navigate('EditNote', selectedItem!);
   };
 
   return (

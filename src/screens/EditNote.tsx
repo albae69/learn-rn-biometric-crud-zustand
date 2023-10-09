@@ -10,10 +10,11 @@ import {Button, Input} from '@components';
 import {Note, NoteSchema} from '@models/Note';
 import useBoundStore from '@store';
 
-type Props = NativeStackScreenProps<RootStackParamList, 'AddNewNote'>;
+type Props = NativeStackScreenProps<RootStackParamList, 'EditNote'>;
 
-const AddNewNote = ({navigation}: Props) => {
-  const {notes, add} = useBoundStore(state => state);
+const EditNote = ({navigation, route}: Props) => {
+  const {id, title, description} = route.params;
+  const {edit} = useBoundStore(state => state);
 
   // Forms
   const {
@@ -23,16 +24,14 @@ const AddNewNote = ({navigation}: Props) => {
     formState: {errors},
   } = useForm<Note>({
     resolver: zodResolver(NoteSchema),
-    defaultValues: {id: 0, title: '', description: ''},
+    defaultValues: {id: id, title: title, description: description},
   });
 
   const [height, setHeight] = useState(100);
 
-  const onAddNote = (data: Note) => {
-    let newNote = {...data, id: notes.length + 1};
-    add(newNote);
-
-    Alert.alert('Message', 'Successfully added a new note', [
+  const onEditNote = (data: Note) => {
+    edit(id, data);
+    Alert.alert('Message', 'Successfully edited note', [
       {
         text: 'OK',
         onPress: () => {
@@ -44,9 +43,7 @@ const AddNewNote = ({navigation}: Props) => {
 
   return (
     <View className="flex flex-1 bg-white p-4">
-      <Text className="text-2xl text-black font-semibold mb-4">
-        Add New Notes
-      </Text>
+      <Text className="text-2xl text-black font-semibold mb-4">Edit Note</Text>
       <View className="mb-4 flex flex-1 justify-center">
         <Controller
           control={control}
@@ -92,10 +89,10 @@ const AddNewNote = ({navigation}: Props) => {
           )}
           name="description"
         />
-        <Button title="Add Note" onPress={handleSubmit(onAddNote)} />
+        <Button title="Save" onPress={handleSubmit(onEditNote)} />
       </View>
     </View>
   );
 };
 
-export default AddNewNote;
+export default EditNote;

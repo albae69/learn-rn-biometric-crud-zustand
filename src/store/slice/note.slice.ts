@@ -17,9 +17,7 @@ const createNoteSlice: StateCreator<NoteSlice> = set => ({
     set(state => ({notes: state.notes.filter(item => item.id !== id)})),
   edit: (id: number, note: Note) =>
     set(state => ({
-      notes: state.notes
-        .filter(item => item.id === id)
-        .map(item => (item.id == note.id ? note : item)),
+      notes: state.notes.map(item => (item.id == note.id ? note : item)),
     })),
 });
 
