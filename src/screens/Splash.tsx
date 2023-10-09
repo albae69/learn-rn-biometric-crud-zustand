@@ -30,8 +30,8 @@ const Splash = ({navigation}: Props) => {
   }, []);
 
   return (
-    <View className="flex flex-1 justify-center items-center">
-      <Text>Secure Notes App</Text>
+    <View className="flex flex-1 justify-center items-center bg-primary">
+      <Text className="text-white text-xl">Secure Notes App</Text>
     </View>
   );
 };

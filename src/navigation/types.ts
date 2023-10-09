@@ -1,7 +1,7 @@
 type RootStackParamList = {
   Splash: undefined;
   Home: undefined;
-  AddNote: undefined;
+  AddNewNote: undefined;
 };
 
 export type {RootStackParamList};
